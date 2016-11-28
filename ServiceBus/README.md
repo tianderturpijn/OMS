@@ -27,10 +27,10 @@ New-AzureRmResourceGroupDeployment -name servicebus `
    -ResourceGroupName MyOMSRG `
    -TemplateFile 'https://raw.githubusercontent.com/tianderturpijn/OMS/master/ServiceBus/azuredeploy.json' `
    -omsWorkspaceName MyOMSworkspace `
-  -omsAutomationAccountName MyAutomationAccountName `
-  -workspaceRegion MyWorkspaceRegion `
-  -automationRegion MyAutomationRegion `
-  -jobGuid $myGUID `
-  -verbose 
+   -omsAutomationAccountName MyAutomationAccountName `
+   -workspaceRegion MyWorkspaceRegion `
+   -automationRegion MyAutomationRegion `
+   -jobGuid $myGUID `
+   -verbose 
                                 
 ````     
