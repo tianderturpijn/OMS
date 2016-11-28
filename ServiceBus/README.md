@@ -24,12 +24,12 @@ This solution (currently in private preview) will allow you to capture your Azur
 ````powershell
 $myGUID = [guid]::newguid() 
 New-AzureRmResourceGroupDeployment -name servicebus `
-                                   -ResourceGroupName OMSRG `
-                                   -TemplateFile 'https://raw.githubusercontent.com/tianderturpijn/OMS/master/ServiceBus/azuredeploy.json' `
-                                    -omsWorkspaceName $omsWorkspaceName `
-  -omsAutomationAccountName $omsAutomationAccountName `
-  -workspaceRegion $workspaceRegion `
-  -automationRegion $automationRegion `
+   -ResourceGroupName MyOMSRG `
+   -TemplateFile 'https://raw.githubusercontent.com/tianderturpijn/OMS/master/ServiceBus/azuredeploy.json' `
+   -omsWorkspaceName MyOMSworkspace `
+  -omsAutomationAccountName MyAutomationAccountName `
+  -workspaceRegion MyWorkspaceRegion `
+  -automationRegion MyAutomationRegion `
   -jobGuid $myGUID `
   -verbose 
                                 
