@@ -20,4 +20,6 @@ This solution (currently in private preview) will allow you to capture your Azur
   
 3. You need to provide the OMS Workspace ID, OMS Workspace Key, Automation Account Name, and Automation Region in the custom deployment ARM template.
 
+## Deploy using PowerShell:````powershellNew-AzureRmResourceGroupDeployment -name backup `                                   -ResourceGroupName OMSRG `                                   -TemplateFile 'https://raw.githubusercontent.com/krnese/AzureDeploy/master/OMS/MSOMS/AzureIaaSBackup/azuredeploy.json' `                                   -vaultname 'recovery' `                                   -vmResourceGroupName MyRG `                                   -vmName myVM `                                   -policyName 'DefaultPolicy' `                                   -Verbose````                                   
+
 
