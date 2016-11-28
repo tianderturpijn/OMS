@@ -10,7 +10,7 @@
     },
     "workspaceRegion": {
       "type": "string",
-      "defaultValue": "West Europe",
+      "defaultValue": "East US",
       "allowedValues": [
         "West Europe",
         "East US"
@@ -27,7 +27,7 @@
     },
     "automationRegion": {
       "type": "string",
-      "defaultValue": "West Europe",
+      "defaultValue": "East US2",
       "allowedValues": [
         "West Europe",
         "East US2"
