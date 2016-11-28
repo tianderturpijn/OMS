@@ -105,49 +105,7 @@ $logType  = "servicebus"
                         NamespaceType = $sb.Namespacetype.ToString();
                         ConnectionString = $sb.connectionString;
 			
-			            <#
-			            ## Standard SB Message Properties
-			            
-			            LockDuration = $Queue.LockDuration;
-			            MaxSizeInMegabytes = $Queue.MaxSizeInMegabytes;
-			            RequiresDuplicateDetection = $Queue.RequiresDuplicateDetection;
-			            RequiresSession = $Queue.RequiresSession;
-			            DefaultMessageTimeToLive = $Queue.DefaultMessageTimeToLive;
-			            AutoDeleteOnIdle = $Queue.AutoDeleteOnIdle;
-			            EnableDeadLetteringOnMessageExpiration = $Queue.EnableDeadLetteringOnMessageExpiration;
-			            DuplicateDetectionHistoryTimeWindow = $Queue.DuplicateDetectionHistoryTimeWindow;
-			            Path = $Queue.Path;
-			            MaxDeliveryCount = $Queue.MaxDeliveryCount;
-			            EnableBatchedOperations = $Queue.EnableBatchedOperations;
-			            SizeInBytes = $Queue.SizeInBytes;
-			            MessageCount = $Queue.MessageCount;
-			
-			            #MessageCountDetails = $Queue.MessageCountDetails;
-			            ActiveMessageCount = $Queue.MessageCountDetails.ActiveMessageCount;
-			            DeadLetterMessageCount = $Queue.MessageCountDetails.DeadLetterMessageCount;
-			            ScheduledMessageCount = $Queue.MessageCountDetails.ScheduledMessageCount;
-			            TransferMessageCount = $Queue.MessageCountDetails.TransferMessageCount;
-			            TransferDeadLetterMessageCount = $Queue.MessageCountDetails.TransferDeadLetterMessageCount;
-			
-			            Authorization = $Queue.Authorization;
-			            IsAnonymousAccessible = $Queue.IsAnonymousAccessible;
-			            SupportOrdering = $Queue.SupportOrdering;
-			            Status = $Queue.Status;
-			            AvailabilityStatus = $Queue.AvailabilityStatus;
-			            ForwardTo = $Queue.ForwardTo;
-			            ForwardDeadLetteredMessagesTo = $Queue.ForwardDeadLetteredMessagesTo;
-			            CreatedAt = $Queue.CreatedAt;
-			            UpdatedAt = $Queue.UpdatedAt;
-			            AccessedAt = $Queue.AccessedAt;
-			            EnablePartitioning = $Queue.EnablePartitioning;
-			            UserMetadata = $Queue.UserMetadata;
-			            EnableExpress = $Queue.EnableExpress;
-			            IsReadOnly = $Queue.IsReadOnly;
-			            ExtensionData = $Queue.ExtensionData;
-			            
-			            ##
-			            #>
-			
+		            		
 			            <# SB Message properties we care about #>
 			            Path = $Queue.Path;
 			            MaxDeliveryCount = $Queue.MaxDeliveryCount;
@@ -185,18 +143,6 @@ $logType  = "servicebus"
 		"This subscription contains no service bus namespaces."
 	}
 
-　
-<#
-foreach ($sub in $subscriptionList)
-{
-	"Processing subscription $($sub.SubscriptionId) `"$($sub.SubscriptionName)`"..."
-		
-	Publish-SBMetrics -azureSubscriptionID $sub.SubscriptionId	
-			
-}
 
-"Done processing all subscriptions."
- 
-#>
  
 
