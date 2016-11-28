@@ -22,12 +22,15 @@ This solution (currently in private preview) will allow you to capture your Azur
 
 ## Deploy using PowerShell:
 ````powershell
-New-AzureRmResourceGroupDeployment -name backup `
+$myGUID = [guid]::newguid() 
+New-AzureRmResourceGroupDeployment -name servicebus `
                                    -ResourceGroupName OMSRG `
-                                   -TemplateFile 'https://raw.githubusercontent.com/krnese/AzureDeploy/master/OMS/MSOMS/AzureIaaSBackup/azuredeploy.json' `
-                                   -vaultname 'recovery' `
-                                   -vmResourceGroupName MyRG `
-                                   -vmName myVM `
-                                   -policyName 'DefaultPolicy' `
-                                   -Verbose
+                                   -TemplateFile 'https://raw.githubusercontent.com/tianderturpijn/OMS/master/ServiceBus/azuredeploy.json' `
+                                    -omsWorkspaceName $omsWorkspaceName `
+  -omsAutomationAccountName $omsAutomationAccountName `
+  -workspaceRegion $workspaceRegion `
+  -automationRegion $automationRegion `
+  -jobGuid $myGUID `
+  -verbose 
+                                
 ````     
