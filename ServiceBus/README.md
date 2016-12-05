@@ -13,6 +13,7 @@ This solution (currently in private preview) will allow you to capture your Azur
 + New Azure Automation Account (with RunAs Account). To create a new Automation Account refer to step 1 below.
 + The schedule (which automatically will be created during deployment) to run the runbook requires a unique GUID, please run this PowerShell command: $myGUID = [guid]::newguid() to retrieve one
 + The artifacts Location Sas Token will be automatically generated, no need to fill that in
+
 **Note: The OMS Workspace and Azure Automation Account must exist within the same resource group. The Azure Automation Account name needs to be unique.**
 
 ## How do I get started?
