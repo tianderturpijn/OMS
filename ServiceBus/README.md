@@ -11,6 +11,7 @@ This solution (currently in private preview) will allow you to capture your Azur
 + Azure Subscription (if you don’t have one you can create one [here](https://azure.microsoft.com/en-us/free/))
 + Operations Management Suite Account (Free Sign Up – No credit card required. Sign up for your free OMS account [here](https://www.microsoft.com/en-us/cloud-platform/operations-management-suite))
 + New Azure Automation Account (with RunAs Account). To create a new Automation Account refer to step 1 below.
++ The schedule to run the runbook requires a unique GUID, please run this PowerShell command: $myGUID = [guid]::newguid() to retrieve one
 
 **Note: The OMS Workspace and Azure Automation Account must exist within the same resource group. The Azure Automation Account name needs to be unique.**
 
