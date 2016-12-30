@@ -60,8 +60,6 @@ Due to specific dependencies to modules, variables and more, the solution requir
 This template will have parameters that will ask for the workspace Id and the workspace Key, so that the runbooks are able to authenticate and ingest data.
 You can log in to the OMS classic portal and navigate to Settings --> Connected Sources to find these values
 
-![alt text](images/idandkey.png "ID and Key")
-
 Once you have completed the pre-reqs, you can click on the deploy button below
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fkrnese%2Fazuredeploy%2Fmaster%2FOMS%2FMSOMS%2FSolutions%2Frecoveryservices%2FaddRecoveryServices.json) 
