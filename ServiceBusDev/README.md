@@ -8,7 +8,7 @@ This solution (currently in private preview) will allow you to capture your Azur
 
 **Updates in this version:**
 + Added monitoring of Topics
-+ Updated for removing view and tile in Log Analytics
++ Enabled removal of the view and solution in the Ibiza portal (under resource group properties)
 + Changed artifactsLocationSasToken to a variable instead of a parameter
 
 ## Prerequisites
