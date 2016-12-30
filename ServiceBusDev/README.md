@@ -6,6 +6,11 @@
 
 This solution (currently in private preview) will allow you to capture your Azure Service Bus metrics and visualize them in Operations Management Suite (Log Analytics). This solution leverages an automation runbook in Azure Automation, the Log Analytics Ingestion API, together with Log Analytics views to present data about all your Azure Service Bus instances in a single log analytics workspace. 
 
+**Updates in this version:**
++ Added monitoring of Topics
++ Updated for removing view and tile in Log Analytics
++ Changed artifactsLocationSasToken to a variable instead of a parameter
+
 ## Prerequisites
 
 + Azure Subscription (if you don’t have one you can create one [here](https://azure.microsoft.com/en-us/free/))
