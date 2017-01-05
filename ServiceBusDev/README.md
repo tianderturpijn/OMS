@@ -62,6 +62,7 @@ You can log in to the OMS classic portal and navigate to Settings --> Connected 
 
 Once you have completed the pre-reqs, you can click on the deploy button below
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftianderturpijn%2FOMS%2Fmaster%2FServiceBusDev%2FaddMultipleSubscriptions.json" target="_blank">    <img src="http://azuredeploy.net/deploybutton.png"/></a>
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftianderturpijn%2FOMS%2Fmaster%2FServiceBusDev%2FaddMultipleSubscriptions.json) 
+
 
 Once deployed you should start to see data from your additional subscriptions flowing into your workspace.
