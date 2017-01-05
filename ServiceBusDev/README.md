@@ -26,7 +26,7 @@ This solution (currently in private preview) will allow you to capture your Azur
 **Note: An Azure Automation account needs to exist before deploying this solution, do not link it to your OMS workspace**
 
 2. Click the button that says ‘**Deploy to Azure**’. This will launch the ARM Template you need to configure in the Azure Portal.
-![alt text](images/Step3Deploy.png "Deployment in the portal")
+![alt text](images/step3deploy.png "Deployment in the portal")
   
 3. You need to provide the resource group name of the Azure Automation account you've created in step 1 (**so choose existing**) and the Automation Account name. Please also provide an unique Job Guid. You can generate a unique Job Guid in PowerShell: $myGUID = [guid]::newguid(). If you don't have an OMS workspace, the template deployment will create one for you
 
