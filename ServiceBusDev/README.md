@@ -24,7 +24,10 @@ This solution (currently in private preview) will allow you to capture your Azur
 ## How do I get started?
 
 1. **Create a new Automation account**: Go the Azure Portal https://portal.azure.com and create an Azure Automation account.
-If you have an existing OMS Log Analytics workspace in a Resource Group, proceed to create the Automation account in this Resource Group. It is recommended that the Azure region is the same as the OMS Log Analytics resource. By default, the wizard will create an SPN account as part of this process. Note: Make sure to create the new Automation Account leveraged for this solution in the subscription that you are wanting to monitor the Azure Service Bus instances. If you don’t have an existing OMS Log Analytics workspace in a Resource Group the template deployment will create one for you, create a new Automation account into a new Resource Group. SPN account will be created by default.
+
+If you have an existing OMS Log Analytics workspace in a Resource Group, proceed to create the Automation account in this Resource Group. It is recommended that the Azure region is the same as the OMS Log Analytics resource. By default, the wizard will create an SPN account as part of this process.
+
+Note: Make sure to create the new Automation Account leveraged for this solution in the subscription that you are wanting to monitor the Azure Service Bus instances. If you don’t have an existing OMS Log Analytics workspace in a Resource Group the template deployment will create one for you, create a new Automation account into a new Resource Group. A SPN account will be created by default.
 **Note: An Azure Automation account needs to exist before deploying this solution, do not link it to your OMS workspace**
 
 2. Click the button that says ‘**Deploy to Azure**’. This will launch the ARM Template you need to configure in the Azure Portal:
