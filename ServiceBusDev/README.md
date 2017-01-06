@@ -31,19 +31,20 @@ This solution (currently in private preview) will allow you to capture your Azur
 ![alt text](images/step3deploy.png "Deployment in the portal")
 
   
+
 **Deployment Settings**
 
-Provide the name of the resource group name in which your new Azure Automation account resides (which you've created in step 1), **so select "Use existing"** . The resource group location will be automatiocally filled in.
+1. Provide the name of the resource group name in which your new Azure Automation account resides (which you've created in step 1), **so select "Use existing"** . The resource group location will be automatiocally filled in.
 
-4. Under "Settings" provide the name and the region of an existing OMS workspace. If you don't have an OMS workspace, the template deployment will create one for you.
+2. Under "Settings" provide the name and the region of an existing OMS workspace. If you don't have an OMS workspace, the template deployment will create one for you.
 
-5. Under "Oms Automation Account Name" provide the Automation Account name (which you've created in step 1) and the region where the Automation Account resides in.
+3. Under "Oms Automation Account Name" provide the Automation Account name (which you've created in step 1) and the region where the Automation Account resides in.
 
-6. Provide an unique Job Guid (this will be used to create a runbook schedule). You can generate a unique Job Guid in PowerShell like this:
+4. Provide an unique Job Guid (this will be used to create a runbook schedule). You can generate a unique Job Guid in PowerShell like this:
 
 ![alt text](images/NewGuid.png "Generate a new GUID in PowerShell")
 
-7. Accept the "Terms and Conditions" and click on "Purchase"
+5. Accept the "Terms and Conditions" and click on "Purchase"
 
 ## Deploy using PowerShell:
 ````powershell
