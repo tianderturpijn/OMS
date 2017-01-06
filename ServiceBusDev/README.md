@@ -44,7 +44,7 @@ This solution (currently in private preview) will allow you to capture your Azur
 
 ![alt text](images/NewGuid.png "Generate a new GUID in PowerShell")
 
-5. Accept the "Terms and Conditions" and click on "Purchase"
+Accept the "Terms and Conditions" and click on "Purchase"
 
 ## Deploy using PowerShell:
 ````powershell
