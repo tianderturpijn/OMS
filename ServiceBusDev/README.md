@@ -23,14 +23,19 @@ This solution (currently in private preview) will allow you to capture your Azur
 
 ## How do I get started?
 
-1. **Create a new Automation account**: Go back into the Azure Portal https://portal.azure.com opening a separate tab from the one that is already opened with the ARM Template. * If you have an existing OMS Log Analytics workspace in a Resource Group, proceed to create the Automation account in this Resource Group. It is recommended that the Azure region is the same as the OMS Log Analytics resource. By default, the wizard will create an SPN account as part of this process. Note: Make sure to create the new Automation Account leveraged for this solution in the subscription that you are wanting to monitor the Azure Service Bus instances. If you don’t have an existing OMS Log Analytics workspace in a Resource Group the template deployment will create one for you, create a new Automation account into a new Resource Group. SPN account will be created by default.
+1. **Create a new Automation account**: Go the Azure Portal https://portal.azure.com and create an Azure Automation account. * If you have an existing OMS Log Analytics workspace in a Resource Group, proceed to create the Automation account in this Resource Group. It is recommended that the Azure region is the same as the OMS Log Analytics resource. By default, the wizard will create an SPN account as part of this process. Note: Make sure to create the new Automation Account leveraged for this solution in the subscription that you are wanting to monitor the Azure Service Bus instances. If you don’t have an existing OMS Log Analytics workspace in a Resource Group the template deployment will create one for you, create a new Automation account into a new Resource Group. SPN account will be created by default.
 **Note: An Azure Automation account needs to exist before deploying this solution, do not link it to your OMS workspace**
 
-2. Click the button that says ‘**Deploy to Azure**’. This will launch the ARM Template you need to configure in the Azure Portal.
+2. Click the button that says ‘**Deploy to Azure**’. This will launch the ARM Template you need to configure in the Azure Portal:
+
 ![alt text](images/step3deploy.png "Deployment in the portal")
 
   
-3. You need to provide the resource group name of the Azure Automation account you've created in step 1 (**so choose existing**) and the Automation Account name. Please also provide an unique Job Guid. You can generate a unique Job Guid in PowerShell: $myGUID = [guid]::newguid(). If you don't have an OMS workspace, the template deployment will create one for you
+3. You need to provide the resource group name of the Azure Automation account you've created in step 1 (**so choose existing**) and the Automation Account name. Please also provide an unique Job Guid. You can generate a unique Job Guid in PowerShell like this:
+
+![alt text](images/NewGuid.png "Generate a new GUID in PowerShell")
+
+If you don't have an OMS workspace, the template deployment will create one for you
 
 ## Deploy using PowerShell:
 ````powershell
