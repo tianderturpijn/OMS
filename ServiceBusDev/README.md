@@ -31,11 +31,11 @@ This solution (currently in private preview) will allow you to capture your Azur
 ![alt text](images/step3deploy.png "Deployment in the portal")
 
   
-3. You need to provide the resource group name of the Azure Automation account you've created in step 1 (**so choose existing**) and the Automation Account name. Please also provide an unique Job Guid. You can generate a unique Job Guid in PowerShell like this:
+3. Provide the name of the resource group name in which your new Azure Automation account resides (which you've created in step 1), **so choose existing** and provide the Automation Account name. Please also provide an unique Job Guid. You can generate a unique Job Guid in PowerShell like this:
 
 ![alt text](images/NewGuid.png "Generate a new GUID in PowerShell")
 
-If you don't have an OMS workspace, the template deployment will create one for you
+4. Provide the name and the region of the OMS workspace. If you don't have an OMS workspace, the template deployment will create one for you.
 
 ## Deploy using PowerShell:
 ````powershell
