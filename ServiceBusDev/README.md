@@ -1,11 +1,10 @@
-
 # Azure Service Bus Monitoring v0.2 - Test
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftianderturpijn%2FOMS%2Fmaster%2FServiceBusDev%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-This solution (currently in private preview) will allow you to capture your Azure Service Bus metrics and visualize them in Operations Management Suite (Log Analytics). This solution leverages an automation runbook in Azure Automation, the Log Analytics Ingestion API, together with Log Analytics views to present data about all your Azure Service Bus instances in a single log analytics workspace. 
+This solution (currently in private preview) will allow you to capture your Azure Service Bus metrics and visualize them in Operations Management Suite (Log Analytics). This solution leverages an automation runbook in Azure Automation, the Log Analytics Ingestion API, together with Log Analytics views to present data about all your Azure Service Bus instances in a single Log Analytics workspace. 
 
 ![alt text](images/ServiceBusSolution.png "Solution View")
 
@@ -76,12 +75,12 @@ To do so, you simply have to deploy this template and provide the workspace Id a
 
 - **Automation Account with SPN**
 
-Due to specific dependencies to modules, variables and more, the solution requires that you creates additional Automation accounts when scaling the solution to collect data from multiple subscriptions. You must create an Automation Account in the Azure portal with the default settings so that the SPN account will be created.
+Due to specific dependencies related to modules, variables and more, the solution requires that you create additional Azure Automation accounts when scaling the solution to collect data from multiple subscriptions. You must create an Automation Account in the Azure portal with the default settings so that the SPN account will be created.
 
 
 - **OMS workspace Id and Key**
 
-This template will have parameters that will ask for the workspace Id and the workspace Key, so that the runbooks are able to authenticate and ingest data.
+This template will have parameters that will ask for the WorkspaceID and the WorkspaceKey, so that the runbooks are able to authenticate and ingest data.
 You can log in to the OMS classic portal and navigate to Settings --> Connected Sources to find these values
 
 Once you have completed the pre-reqs, you can click on the deploy button below
