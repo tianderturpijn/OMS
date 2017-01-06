@@ -7,6 +7,8 @@
 
 This solution (currently in private preview) will allow you to capture your Azure Service Bus metrics and visualize them in Operations Management Suite (Log Analytics). This solution leverages an automation runbook in Azure Automation, the Log Analytics Ingestion API, together with Log Analytics views to present data about all your Azure Service Bus instances in a single log analytics workspace. 
 
+![alt text](images/ServiceBusSolution.png "Solution View")
+
 **Updates in this version:**
 + Added monitoring of Topics
 + Enabled removal of the view and solution in the Ibiza portal (under resource group properties)
