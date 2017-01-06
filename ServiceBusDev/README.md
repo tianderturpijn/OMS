@@ -23,7 +23,7 @@ This solution (currently in private preview) will allow you to capture your Azur
 
 ## How do I get started?
 
-**Create a new Automation account**: Go the Azure Portal https://portal.azure.com and create an Azure Automation account.
+**Create a new Automation account**: Go the Azure Portal https://portal.azure.com and create an Azure Automation account (do not link it to your OMS workspace).
 
 If you have an existing OMS Log Analytics workspace in a Resource Group, proceed to create the Automation account in this Resource Group. It is recommended that the Azure region is the same as the OMS Log Analytics resource. By default, the wizard will create an SPN account as part of this process.
 
