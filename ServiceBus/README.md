@@ -12,6 +12,7 @@ This solution (currently in private preview) will allow you to capture your Azur
 + Added monitoring of Topics
 + Enabled removal of the view and solution in the Ibiza portal (under resource group properties)
 + Changed artifactsLocationSasToken to a variable instead of a parameter
++ Support for multiple Azure subscriptions
 
 ## Prerequisites
 
