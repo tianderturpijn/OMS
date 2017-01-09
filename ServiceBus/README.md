@@ -35,7 +35,8 @@ Click the button that says ‘**Deploy to Azure**’. This will launch the ARM T
 
 ![alt text](images/step3deploy.png "Deployment in the portal")
 
-  
+
+
 
 **Deployment Settings**
 
@@ -90,7 +91,7 @@ Once you have completed the pre-reqs, you can click on the deploy button below
 2. Enter the WorkspaceID and WorkspaceKey for the existing workspace you want this additional subscription service bus data to flow in.
 3. Enter the OMS Automation Account Name and its region
 4. Enter an unique jobID (use PowerShell's New-Guid command to generate one)
-
+5. Accept the terms and conditions and click on Purchase
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftianderturpijn%2FOMS%2Fmaster%2FServiceBus%2FaddMultipleSubscriptions.json) 
 
