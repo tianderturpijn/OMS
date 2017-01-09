@@ -39,7 +39,7 @@ Click the button that says ‘**Deploy to Azure**’. This will launch the ARM T
 
 **Deployment Settings**
 
-1. Provide the name of the resource group name in which your new Azure Automation account resides (which you've created in step 1), **so select "Use existing"** . The resource group location will be automatiocally filled in.
+1. Provide the name of the resource group in which your new Azure Automation account resides (which you've created in step 1), **so select "Use existing"** . The resource group location will be automatiocally filled in.
 
 2. Under "Settings" provide the name and the region of an existing OMS workspace. If you don't have an OMS workspace, the template deployment will create one for you.
 
@@ -83,6 +83,14 @@ This template will have parameters that will ask for the WorkspaceID and the Wor
 You can log in to the OMS classic portal and navigate to Settings --> Connected Sources to find these values
 
 Once you have completed the pre-reqs, you can click on the deploy button below
+
+**Deployment Settings**
+
+1. Provide the name of the resource group in which your Azure Automation account resides (which has access to the additional subscriptions you want to add), **so select "Use existing"** . The resource group location will be automatiocally filled in.
+2. Enter the WorkspaceID and WorkspaceKey for the existing workspace you want this additional subscription service bus data to flow in.
+3. Enter the OMS Automation Account Name and its region
+4. Enter an unique jobID (use PowerShell's New-Guid command to generate one)
+
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ftianderturpijn%2FOMS%2Fmaster%2FServiceBus%2FaddMultipleSubscriptions.json) 
 
