@@ -45,20 +45,6 @@
         "description": "Specify region for your automation account"
       }
     },
-    "_artifactsLocation": {
-      "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/tianderturpijn/OMS/master/ServiceBus",
-      "metadata": {
-        "description": "URI to artifacts location"
-      }
-    },
-    "_artifactsLocationSasToken": {
-      "type": "securestring",
-      "defaultValue": "",
-      "metadata": {
-        "description": "The sasToken required to access _artifactsLocation.  When the template is deployed using the accompanying scripts, a sasToken will be automatically generated"
-      }
-    },
     "jobGuid": {
       "type": "string",
       "defaultValue": "",
@@ -68,6 +54,8 @@
     }
   },
   "variables": {
+    "_artifactsLocation": "https://raw.githubusercontent.com/tianderturpijn/OMS/master/ServiceBusDev",
+    "_artifactsLocationSasToken": "",
     "assets": {
       "psModules": {
         "ingestionAPI": {
@@ -91,15 +79,15 @@
       },
       "runbooks": {
         "servicebusManagement": {
-          "name": "servicebusIngestion",
-          "url": "[concat(parameters('_artifactsLocation'), '/scripts/servicebusIngestion.ps1', parameters('_artifactsLocationSasToken'))]",
-          "version": "1.0.0.0",
-          "type": "PowerShell",
           "description": "OMS runbook to capture unmanaged VMs into OMS Log Analytics",
           "Id": "",
-          "ingestScheduleName": "IngestAPISchedule",
+          "ingestFrequency": "hour",
           "ingestInterval": 1,
-          "ingestFrequency": "hour"
+          "ingestScheduleName": "IngestAPISchedule",
+          "name": "servicebusIngestion",
+          "type": "PowerShell",
+          "url": "[concat(variables('_artifactsLocation'), '/scripts/servicebusIngestion.ps1', variables('_artifactsLocationSasToken'))]",
+          "version": "1.0.0.0"
         }
       }
     },
@@ -249,6 +237,76 @@
                     "ColumnsTitle": {
                       "Name": "Queue's",
                       "Value": "Count"
+                    },
+                    "Color": "#0072c6",
+                    "thresholds": {
+                      "isEnabled": false,
+                      "values": [
+                        {
+                          "name": "Normal",
+                          "threshold": "Default",
+                          "color": "#009e49",
+                          "isDefault": true
+                        },
+                        {
+                          "name": "Warning",
+                          "threshold": "60",
+                          "color": "#fcd116",
+                          "isDefault": false
+                        },
+                        {
+                          "name": "Error",
+                          "threshold": "90",
+                          "color": "#ba141a",
+                          "isDefault": false
+                        }
+                      ]
+                    },
+                    "NameDSVSeparator": "",
+                    "NavigationQuery": "{selected item}"
+                  }
+                }
+              },
+              {
+                "Id": "LineChartCalloutBuilderBlade",
+                "Type": "Blade",
+                "Version": 0,
+                "Configuration": {
+                  "General": {
+                    "title": "Topics",
+                    "newGroup": false,
+                    "icon": "",
+                    "useIcon": false
+                  },
+                  "Header": {
+                    "Title": "Counts",
+                    "Subtitle": ""
+                  },
+                  "LineChart": {
+                    "Query": "Type=servicebus_CL | measure percentile99(MaxSizeInMegabytes_d) by TopicName_s interval 15minutes",
+                    "Callout": {
+                      "Title": "Avg size in megabytes per hour",
+                      "Series": "",
+                      "Operation": "Average"
+                    },
+                    "yAxis": {
+                      "isLogarithmic": false,
+                      "units": {
+                        "baseUnitType": "",
+                        "baseUnit": "",
+                        "displayUnit": ""
+                      },
+                      "customLabel": ""
+                    }
+                  },
+                  "List": {
+                    "Query": "Type=servicebus_CL | measure max(MaxSizeInMegabytes_d) by TopicName_s",
+                    "HideGraph": false,
+                    "enableSparklines": false,
+                    "operation": "Summary",
+                    "ColumnsTitle": {
+                      "Name": "Topics",
+                      "Value": "Size in MegaBytes"
                     },
                     "Color": "#0072c6",
                     "thresholds": {
@@ -497,11 +555,13 @@
           "[resourceId('Microsoft.Automation/automationAccounts/variables/', parameters('omsAutomationAccountName'), variables('assets').aaVariables.OMSWorkspaceKey.name)]"
         ],
         "containedResources": [
+          "[resourceId('Microsoft.OperationalInsights/workspaces/views/', parameters('omsWorkspaceName'), variables('omsSolutions').customSolution.name)]"
         ]
       }
     }
   ],
   "outputs": {}
 }
+
 
 
