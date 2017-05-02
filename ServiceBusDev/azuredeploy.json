@@ -72,6 +72,10 @@
         "ingestionAPI": {
           "name": "OMSIngestionAPI",
           "uri": "https://raw.githubusercontent.com/tianderturpijn/OMS/master/ServiceBus/modules/OMSIngestionAPI.zip"
+        },
+        "servicebusARMmodule": {
+          "name": "azureRmServicebus",
+          "uri": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.servicebus.0.2.0.nupkg"
         }
       },
       "aaVariables": {
@@ -798,6 +802,22 @@
           "properties": {
             "contentLink": {
               "uri": "[variables('assets').psModules.ingestionAPI.uri]"
+            }
+          }
+        },
+        {
+          "name": "[variables('assets').psModules.servicebusARMmodule.name]",
+          "type": "Modules",
+          "apiVersion": "2015-10-31",
+          "tags": {},
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]",
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceId.name)]",
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceKey.name)]"
+          ],
+          "properties": {
+            "contentLink": {
+              "uri": "[variables('assets').psModules.servicebusARMmodule.uri]"
             }
           }
         },
