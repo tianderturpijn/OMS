@@ -89,16 +89,22 @@
         }
       },
       "runbooks": {
-        "servicebusManagement": {
-          "description": "OMS runbook to capture unmanaged VMs into OMS Log Analytics",
-          "Id": "",
-          "ingestFrequency": "hour",
-          "ingestInterval": 1,
-          "ingestScheduleName": "IngestAPISchedule",
-          "name": "servicebusIngestion",
+        "scheduleRunbook": {
+          "name": "scheduleIngestion",
+          "version": "1.0.0.0",
+          "description": "schedule runbook",
           "type": "PowerShell",
-          "url": "[concat(variables('_artifactsLocation'), '/scripts/servicebusIngestion.ps1', variables('_artifactsLocationSasToken'))]",
-          "version": "1.0.0.0"
+          "Id": "",
+          "url": "[concat(variables('_artifactsLocation'), '/scripts/scheduleIngestion.ps1', variables('_artifactsLocationSasToken'))]",
+          "ingestScheduleName": "ingestAPISchedule"
+        },
+        "ingestionRunbook": {
+          "name": "servicebusIngestion",
+          "version": "1.0.0.0",
+          "description": "runbook to ingest service bus data",
+          "type": "PowerShell",
+          "Id": "",
+          "url": "[concat(variables('_artifactsLocation'), '/scripts/servicebusIngestion.ps1', variables('_artifactsLocationSasToken'))]"
         }
       }
     },
@@ -796,67 +802,79 @@
           }
         },
         {
-          "name": "[variables('assets').runbooks.servicebusManagement.name]",
+          "name": "[variables('assets').runbooks.scheduleRunbook.name]",
           "type": "runbooks",
           "apiVersion": "2015-10-31",
           "location": "[parameters('automationRegion')]",
           "dependsOn": [
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/modules/', variables('assets').psModules.ingestionAPI.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceId.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceKey.name)]"
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]"
           ],
           "properties": {
-            "runbookType": "[variables('assets').runbooks.servicebusManagement.type]",
-            "logProgress": true,
-            "logVerbose": false,
-            "description": "[variables('assets').runbooks.servicebusManagement.description]",
+            "runbookType": "[variables('assets').runbooks.scheduleRunbook.type]",
+            "logProgress": "true",
+            "logVerbose": "false",
+            "description": "[variables('assets').runbooks.scheduleRunbook.description]",
             "publishContentLink": {
-              "uri": "[variables('assets').runbooks.servicebusManagement.url]",
-              "version": "[variables('assets').runbooks.servicebusManagement.version]"
+              "uri": "[variables('assets').runbooks.scheduleRunbook.url]",
+              "version": "[variables('assets').runbooks.scheduleRunbook.version]"
             }
           }
         },
         {
-          "name": "[concat(parameters('omsAutomationAccountName'), '/', variables('assets').runbooks.servicebusManagement.ingestScheduleName)]",
-          "type": "microsoft.automation/automationAccounts/schedules",
+          "name": "[variables('assets').runbooks.ingestionRunbook.name]",
+          "type": "runbooks",
           "apiVersion": "2015-10-31",
           "location": "[parameters('automationRegion')]",
           "dependsOn": [
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/runbooks/', variables('assets').runbooks.servicebusManagement.name)]"
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]"
           ],
-          "tags": {},
           "properties": {
-            "description": "OMS Ingestion API Scheduler",
-            "startTime": "",
-            "isEnabled": true,
-            "interval": "[variables('assets').runbooks.servicebusManagement.ingestInterval]",
-            "frequency": "[variables('assets').runbooks.servicebusManagement.ingestFrequency]"
+            "runbookType": "[variables('assets').runbooks.ingestionRunbook.type]",
+            "logProgress": "true",
+            "logVerbose": "false",
+            "description": "[variables('assets').runbooks.ingestionRunbook.description]",
+            "publishContentLink": {
+              "uri": "[variables('assets').runbooks.ingestionRunbook.url]",
+              "version": "[variables('assets').runbooks.ingestionRunbook.version]"
+            }
           }
         },
         {
-          "name": "[concat(parameters('omsAutomationAccountName'), '/', parameters('jobGuid'))]",
-          "type": "microsoft.automation/automationAccounts/jobSchedules",
+          "name": "[variables('assets').runbooks.scheduleRunbook.ingestScheduleName]",
+          "type": "schedules",
           "apiVersion": "2015-10-31",
-          "location": "[parameters('workspaceRegion')]",
-          "dependsOn": [
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/schedules/', variables('assets').runbooks.servicebusManagement.ingestScheduleName)]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/runbooks/', variables('assets').runbooks.servicebusManagement.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]"
-          ],
-          "tags": {},
           "properties": {
-            "schedule": {
-              "name": "[variables('assets').runbooks.servicebusManagement.ingestScheduleName]"
-            },
+            "description": "This schedule is intended to run only once to invoke a runbook which will create the actual schedules, after that it will be expired and can be safely deleted",
+            "startTime": "",
+            "expiryTime": "",
+            "isEnabled": true,
+            "frequency": "OneTime"
+          },
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]",
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/runbooks/',variables('runbooks').scheduleRunbook.name)]"
+          ]
+        },
+        {
+          "name": "[parameters('jobGuid')]",
+          "type": "jobSchedules",
+          "apiVersion": "2015-10-31",
+          "properties": {
             "runbook": {
-              "name": "[variables('assets').runbooks.servicebusManagement.name]"
+              "name": "[variables('assets').runbooks.scheduleRunbook.Name]"
+            },
+            "schedule": {
+              "name": "[variables('assets').runbooks.scheduleRunbook.ingestScheduleName]"
             }
-          }
+          },
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]",
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/runbooks/',variables('runbooks').scheduleRunbook.name)]",
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/schedules/',variables('runbooks').scheduleRunbook.ingestScheduleName)]"
+          ]
         }
       ]
-    },
+        },
     {
       "name": "[variables('omsSolutions').customSolution.solutionName]",
       "type": "Microsoft.OperationsManagement/solutions",
