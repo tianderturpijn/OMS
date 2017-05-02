@@ -852,7 +852,7 @@
           },
           "dependsOn": [
             "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]",
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/runbooks/',variables('runbooks').scheduleRunbook.name)]"
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/runbooks/',variables('assets').runbooks.scheduleRunbook.name)]"
           ]
         },
         {
@@ -869,8 +869,36 @@
           },
           "dependsOn": [
             "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]",
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/runbooks/',variables('runbooks').scheduleRunbook.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/schedules/',variables('runbooks').scheduleRunbook.ingestScheduleName)]"
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/runbooks/',variables('assets').runbooks.scheduleRunbook.name)]",
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/schedules/',variables('assets').runbooks.scheduleRunbook.ingestScheduleName)]"
+          ]
+        },
+        {
+          "name": "AzureAutomationResourceGroup",
+          "type": "variables",
+          "apiVersion": "2015-10-31",
+          "properties": {
+            "description": "The name of the resource group",
+            "isEncrypted": 0,
+            "type": "string",
+            "value": "[concat('\"',resourceGroup().name,'\"')]"
+          },
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]"
+          ]
+        },
+        {
+          "name": "AzureAutomationAccount",
+          "type": "variables",
+          "apiVersion": "2015-10-31",
+          "properties": {
+            "description": "The name of the Azure Automation Account",
+            "isEncrypted": 0,
+            "type": "string",
+            "value": "[concat('\"',parameters('omsAutomationAccountName'),'\"')]"
+          },
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]"
           ]
         }
       ]
@@ -883,7 +911,7 @@
       "dependsOn": [
         "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]",
         "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'), '/views/', variables('omsSolutions').customSolution.name)]",
-        "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/schedules/', variables('assets').runbooks.servicebusManagement.ingestScheduleName)]"
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/schedules/', variables('assets').runbooks.scheduleRunbook.ingestScheduleName)]"
       ],
       "plan": {
         "name": "[variables('omsSolutions').customSolution.solutionName]",
