@@ -1,5 +1,5 @@
 # Suspend the runbook if any errors, not just exceptions, are encountered
-$ErrorActionPreference = "Stop"
+#$ErrorActionPreference = "Stop"
 
 #region Login to Azure account and select the subscription.
 #Authenticate to Azure with SPN section
@@ -15,13 +15,13 @@ Select-AzureRmSubscription -SubscriptionId $Conn.SubscriptionID -TenantId $Conn.
 $AAResourceGroup = Get-AutomationVariable -name "AzureAutomationResourceGroup"
 $AAAccount = Get-AutomationVariable -name "AzureAutomationAccount"
 $RunbookName = "servicebusIngestion"
-$ScheduleName = "servicebus"
+$ScheduleName = "servicebusIngestionSchedule"
 
 $RunbookStartTime = $Date = $([DateTime]::Now.AddMinutes(10))
 
 [int]$RunFrequency = 10
 $NumberofSchedules = 60 / $RunFrequency
-"$NumberofSchedules schedules will be created"
+"$NumberofSchedules schedules will be created which will invoke the servicebusIngestion runbook to run every 10mins"
 
 $Count = 0
 While ($count -lt $NumberofSchedules)
