@@ -34,11 +34,3 @@ While ($count -lt $NumberofSchedules)
     $RunbookStartTime = $RunbookStartTime.AddMinutes($RunFrequency)
 }
 
-
-<#
-Select-AzureRmSubscription -SubscriptionId "488940ab-71f4-4b40-86da-f5ab2ab4866e" -TenantId "72f988bf-86f1-41af-91ab-2d7cd011db47"
-$AAResourceGroup = "ServiceBusDevRG"    
-$AAAccount = "SBautomation"
-    $Schedule = New-AzureRmAutomationSchedule -Name "$ScheduleName" -StartTime $RunbookStartTime -HourInterval 1 -AutomationAccountName $AAAccount -ResourceGroupName $AAResourceGroup
-    $Sch = Register-AzureRmAutomationScheduledRunbook -RunbookName $RunbookName -AutomationAccountName $AAAccount -ResourceGroupName $AAResourceGroup -ScheduleName "$ScheduleName"
-#>    
