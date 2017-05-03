@@ -3,10 +3,10 @@ $ErrorActionPreference = "Stop"
 
 #region Setting up connections
 # ASM authentication
-$ConnectionAssetName = "AzureClassicRunAsConnection"
+#$ConnectionAssetName = "AzureClassicRunAsConnection"
 
 # Get the connection
-$connection = Get-AutomationConnection -Name $connectionAssetName        
+#$connection = Get-AutomationConnection -Name $connectionAssetName        
 
 # Authenticate to Azure with certificate
 Write-Verbose "Get connection asset: $ConnectionAssetName" -Verbose
@@ -120,7 +120,7 @@ Function Publish-SbQueueMetrics
         if($SBqueue -ne $null) #We have Queues, so we can continue
         {
             #clear table
-            $queueTable = @()
+            #$queueTable = @()
             
             foreach($queue in $SBqueue)
             {
@@ -210,9 +210,9 @@ Function Publish-SbQueueMetrics
 			        $jsonQueueTable = ConvertTo-Json -InputObject $queueTable
 
 				}
-                #Send-OMSAPIIngestionData -customerId $customerId -sharedKey $sharedKey -body $jsonQueueTable -logType $logType -TimeStampField $Timestampfield
+                Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body $jsonQueueTable -logType $logType -TimeStampField $Timestampfield
 		    	#Uncomment below to troubleshoot
-		    	$jsonQueueTable
+		    	#$jsonQueueTable
         
         }
         else{Write-Output ("No service bus queues found in namespace: " + $sb.name + "`n")}
@@ -313,9 +313,9 @@ Function Publish-SbTopicMetrics{
 				}
                 else{"No topics found."}
 		    	
-                #Send-OMSAPIIngestionData -customerId $customerId -sharedKey $sharedKey -body $jsonTopicTable -logType $logType -TimeStampField $Timestampfield
+                Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body $jsonTopicTable -logType $logType -TimeStampField $Timestampfield
 		    	#Uncomment below to troubleshoot
-		    	$jsonTopicTable
+		    	#$jsonTopicTable
 			}
 		}
 	} 
@@ -397,9 +397,9 @@ Function Publish-SbTopicSubscriptions{
 			        $jsonSubscriptionTable = ConvertTo-Json -InputObject $subscriptionTable
                     }
 
-                #Send-OMSAPIIngestionData -customerId $customerId -sharedKey $sharedKey -body jsonSubscriptionTable -logType $logType -TimeStampField $Timestampfield
+                Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body jsonSubscriptionTable -logType $logType -TimeStampField $Timestampfield
 		    	#Uncomment below to troubleshoot
-		    	$jsonSubscriptionTable
+		    	#$jsonSubscriptionTable
                     
                 }
             }
@@ -414,3 +414,5 @@ $sbNameSpace = Get-SbNameSpace
 Publish-SbQueueMetrics -sbNamespace $sbNameSpace
 Publish-SbTopicMetrics -sbNamespace $sbNameSpace
 Publish-SbTopicSubscriptions -sbNamespace $sbNameSpace
+
+"We're done!"
