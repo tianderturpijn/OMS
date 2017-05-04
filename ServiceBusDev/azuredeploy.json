@@ -95,7 +95,7 @@
         },
         "azureRmSql": {
           "name": "AzureRM.Sql",
-          "uri": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.resources.2.8.0.nupkg"
+          "uri": "https://devopsgallerystorage.blob.core.windows.net/packages/azurerm.sql.2.8.0.nupkg"
         },
         "azure": {
           "name": "Azure",
@@ -834,6 +834,22 @@
           }
         },
         {
+          "name": "[variables('assets').psModules.azureRmProfile.name]",
+          "type": "Modules",
+          "apiVersion": "2015-10-31",
+          "tags": {},
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]",
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceId.name)]",
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceKey.name)]"
+          ],
+          "properties": {
+            "contentLink": {
+              "uri": "[variables('assets').psModules.azureRmProfile.uri]"
+            }
+          }
+        },
+        {
           "name": "[variables('assets').psModules.azureStorage.name]",
           "type": "Modules",
           "apiVersion": "2015-10-31",
@@ -842,7 +858,7 @@
             "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]",
             "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceId.name)]",
             "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceKey.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/modules/',variables('assets').psModules.ingestionAPI.name)]"
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/modules/',variables('assets').psModules.azureRmProfile.name)]"
           ],
           "properties": {
             "contentLink": {
@@ -885,23 +901,6 @@
           }
         },
         {
-          "name": "[variables('assets').psModules.azureRmProfile.name]",
-          "type": "Modules",
-          "apiVersion": "2015-10-31",
-          "tags": {},
-          "dependsOn": [
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceId.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceKey.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/modules/',variables('assets').psModules.azureRmCompute.name)]"
-          ],
-          "properties": {
-            "contentLink": {
-              "uri": "[variables('assets').psModules.azureRmProfile.uri]"
-            }
-          }
-        },
-        {
           "name": "[variables('assets').psModules.azureRmResources.name]",
           "type": "Modules",
           "apiVersion": "2015-10-31",
@@ -910,7 +909,7 @@
             "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]",
             "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceId.name)]",
             "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceKey.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/modules/',variables('assets').psModules.azureRmProfile.name)]"
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/modules/',variables('assets').psModules.azureRmAutomation.name)]"
           ],
           "properties": {
             "contentLink": {
@@ -966,22 +965,6 @@
           "properties": {
             "contentLink": {
               "uri": "[variables('assets').psModules.azureRmServicebus.uri]"
-            }
-          }
-        },
-        {
-          "name": "[variables('assets').psModules.azureRmResources.name]",
-          "type": "Modules",
-          "apiVersion": "2015-10-31",
-          "tags": {},
-          "dependsOn": [
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceId.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'), '/variables/', variables('assets').aaVariables.OMSWorkspaceKey.name)]"
-          ],
-          "properties": {
-            "contentLink": {
-              "uri": "[variables('assets').psModules.azureRmResources.uri]"
             }
           }
         },
@@ -1054,7 +1037,8 @@
           "dependsOn": [
             "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]",
             "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/runbooks/',variables('assets').runbooks.scheduleRunbook.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/schedules/',variables('assets').runbooks.scheduleRunbook.ingestScheduleName)]"
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/schedules/',variables('assets').runbooks.scheduleRunbook.ingestScheduleName)]",
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/modules/',variables('assets').psModules.azureRmServicebus.name)]"
           ]
         },
         {

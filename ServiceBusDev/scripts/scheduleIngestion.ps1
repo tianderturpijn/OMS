@@ -1,5 +1,5 @@
 # Suspend the runbook if any errors, not just exceptions, are encountered
-#$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Stop"
 
 #region Login to Azure account and select the subscription.
 #Authenticate to Azure with SPN section
@@ -28,9 +28,14 @@ While ($count -lt $NumberofSchedules)
 {
     $count ++
 
+    try
+    {
     "Creating schedule $ScheduleName-$Count for $RunbookStartTime for runbook $RunbookName"
     $Schedule = New-AzureRmAutomationSchedule -Name "$ScheduleName-$Count" -StartTime $RunbookStartTime -HourInterval 1 -AutomationAccountName $AAAccount -ResourceGroupName $AAResourceGroup
     $Sch = Register-AzureRmAutomationScheduledRunbook -RunbookName $RunbookName -AutomationAccountName $AAAccount -ResourceGroupName $AAResourceGroup -ScheduleName "$ScheduleName-$Count"
     $RunbookStartTime = $RunbookStartTime.AddMinutes($RunFrequency)
+    }
+    catch
+    {throw "Creation of schedules has failed!"}
 }
 
