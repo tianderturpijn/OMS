@@ -1,12 +1,12 @@
 ﻿# Suspend the runbook if any errors, not just exceptions, are encountered
-$ErrorActionPreference = "Stop"
+#$ErrorActionPreference = "Stop"
 
 #region Setting up connections
-# ASM authentication
-#$ConnectionAssetName = "AzureClassicRunAsConnection"
+#ASM authentication
+$ConnectionAssetName = "AzureClassicRunAsConnection"
 
-# Get the connection
-#$connection = Get-AutomationConnection -Name $connectionAssetName        
+#Get the connection
+$connection = Get-AutomationConnection -Name $connectionAssetName        
 
 # Authenticate to Azure with certificate
 Write-Verbose "Get connection asset: $ConnectionAssetName" -Verbose
@@ -57,9 +57,7 @@ $Conn = Get-AutomationConnection -Name AzureRunAsConnection
 $SelectedAzureSub = Select-AzureRmSubscription -SubscriptionId $Conn.SubscriptionID -TenantId $Conn.tenantid 
 #endregion
 
-
-"Logtype Name for ServiceBus(es) is '$logType'"
-
+#endregion
  Function CalculateFreeSpacePercentage{
  param(
 [Parameter(Mandatory=$true)]
@@ -97,6 +95,7 @@ Function Publish-SbQueueMetrics
 	$jsonQueueTable = @()
     $sx = @()
 
+    "----------------- Start Queue section -----------------"
     "Found $($sbNamespace.Count) service bus namespace(s)."
     "Processing Queues.... `n"
     foreach($sb in $sbNamespace)
@@ -120,7 +119,7 @@ Function Publish-SbQueueMetrics
         if($SBqueue -ne $null) #We have Queues, so we can continue
         {
             #clear table
-            #$queueTable = @()
+            $queueTable = @()
             
             foreach($queue in $SBqueue)
             {
@@ -218,6 +217,7 @@ Function Publish-SbQueueMetrics
         else{Write-Output ("No service bus queues found in namespace: " + $sb.name + "`n")}
     
         }
+    "----------------- End Queue section -----------------`n"
 }
 
 Function Publish-SbTopicMetrics{
@@ -227,6 +227,8 @@ Function Publish-SbTopicMetrics{
     $topicTable = @()
 	$jsonTopicTable = @()
     $sx = @()
+
+    "----------------- Start Topic section -----------------"
 
 	if ($sbNamespace -ne $null)
     {
@@ -313,9 +315,9 @@ Function Publish-SbTopicMetrics{
 				}
                 else{"No topics found."}
 		    	
-                Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body $jsonTopicTable -logType $logType -TimeStampField $Timestampfield
+                #Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body $jsonTopicTable -logType $logType -TimeStampField $Timestampfield
 		    	#Uncomment below to troubleshoot
-		    	#$jsonTopicTable
+		    	$jsonTopicTable
 			}
 		}
 	} 
@@ -323,7 +325,7 @@ Function Publish-SbTopicMetrics{
 	{
 		"This subscription contains no service bus namespaces."
 	}
-
+    "----------------- End Topic section -----------------`n"
 }
 
 Function Publish-SbTopicSubscriptions{
@@ -333,6 +335,8 @@ Function Publish-SbTopicSubscriptions{
     $subscriptionTable = @()
 	$jsonSubscriptionTable = @()
     $sx = @()
+
+    "----------------- Start Topic Subscription section -----------------"
 
     "Processing Topic Subscriptions... `n"
 
@@ -397,9 +401,9 @@ Function Publish-SbTopicSubscriptions{
 			        $jsonSubscriptionTable = ConvertTo-Json -InputObject $subscriptionTable
                     }
 
-                Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body jsonSubscriptionTable -logType $logType -TimeStampField $Timestampfield
+                #Send-OMSAPIIngestionData -customerId $customerId -sharedKey $sharedKey -body jsonSubscriptionTable -logType $logType -TimeStampField $Timestampfield
 		    	#Uncomment below to troubleshoot
-		    	#$jsonSubscriptionTable
+		    	$jsonSubscriptionTable
                     
                 }
             }
@@ -407,12 +411,17 @@ Function Publish-SbTopicSubscriptions{
         }
     
     }
-
+   
+   "----------------- End Topic Subscription section -----------------`n"
 }
+
+$sbNameSpace = $null
+$topic = $null
+$sx = $null
 
 $sbNameSpace = Get-SbNameSpace
 Publish-SbQueueMetrics -sbNamespace $sbNameSpace
 Publish-SbTopicMetrics -sbNamespace $sbNameSpace
 Publish-SbTopicSubscriptions -sbNamespace $sbNameSpace
-
+"`n"
 "We're done!"
