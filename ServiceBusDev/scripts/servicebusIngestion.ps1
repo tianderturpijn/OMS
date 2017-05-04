@@ -1,5 +1,5 @@
 ﻿# Suspend the runbook if any errors, not just exceptions, are encountered
-#$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Stop"
 
 #region Setting up connections
 #ASM authentication
@@ -209,9 +209,15 @@ Function Publish-SbQueueMetrics
 			        $jsonQueueTable = ConvertTo-Json -InputObject $queueTable
 
 				}
-                Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body $jsonQueueTable -logType $logType -TimeStampField $Timestampfield
-		    	#Uncomment below to troubleshoot
-		    	#$jsonQueueTable
+                
+                try
+                {
+                    "Initiating ingestion of Queue data....`n"
+                    Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body $jsonQueueTable -logType $logType -TimeStampField $Timestampfield
+		    	    #Uncomment below to troubleshoot
+		    	    #$jsonQueueTable
+                }
+                catch {Throw "Ingestion of Queue data has failed!"}
         
         }
         else{Write-Output ("No service bus queues found in namespace: " + $sb.name + "`n")}
@@ -315,9 +321,14 @@ Function Publish-SbTopicMetrics{
 				}
                 else{"No topics found."}
 		    	
-                #Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body $jsonTopicTable -logType $logType -TimeStampField $Timestampfield
-		    	#Uncomment below to troubleshoot
-		    	$jsonTopicTable
+                try
+                {
+                    "Initiating ingestion of Topic data....`n"
+                    Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body $jsonTopicTable -logType $logType -TimeStampField $Timestampfield
+		    	    #Uncomment below to troubleshoot
+		    	    #$jsonTopicTable
+                }
+                catch {Throw "Error ingesting Topic data!"}
 			}
 		}
 	} 
@@ -373,38 +384,43 @@ Function Publish-SbTopicSubscriptions{
                     $topicSubscriptions = Get-AzureRmServiceBusSubscription -ResourceGroup $sbResourceGroup -NamespaceName $sb.Name -TopicName $topic.Name
                     "Found $($topicSubscriptions.name.Count) Subscriptions for Topic `"$($topic.Name)`" - service bus instance `"$($sb.Name)`"....`n"
 
-                    foreach($topicSubscription in $topicSubscriptions)
+                    if($topicSubscriptions.Name.count -gt 0) #if we don't have subscriptions, we need to skip this step
                     {
-                        "Processing Subscription: `"$($topicSubscription.Name)`" for Topic: `"$($topic.Name)`"`n"
+                        foreach($topicSubscription in $topicSubscriptions)
+                        {
+                            "Processing Subscription: `"$($topicSubscription.Name)`" for Topic: `"$($topic.Name)`"`n"
 
-                        #Construct the ingestion table
-                        $sx = New-Object PSObject -Property @{
-                        TimeStamp = $([DateTime]::Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
-                        ServiceBusName=$sb.Name;
-                        TopicName = $topic.Name;
-                        SubscriptionName = $topicSubscription.Name
-                        Status = $topicSubscription.Status;
-                        EntityAvailabilityStatus = $topicSubscription.EntityAvailabilityStatus;
-                        MessageCount = $topicSubscription.MessageCount;
-			            SubscriptionActiveMessageCount = $topicSubscription.CountDetails.ActiveMessageCount;
-			            SubscriptionDeadLetterMessageCount = $topicSubscription.CountDetails.DeadLetterMessageCount;
-			            SubscriptionScheduledMessageCount = $topicSubscription.CountDetails.ScheduledMessageCount;
-			            SubscriptionTransferMessageCount = $topicSubscription.CountDetails.TransferMessageCount;
-			            SubscriptionTransferDeadLetterMessageCount = $topicSubscription.CountDetails.TransferDeadLetterMessageCount;                                 		            
-			            }
-                    
-			
-					$sx
-			        $subscriptionTable = $subscriptionTable += $sx
+                             #Construct the ingestion table
+                              $sx = New-Object PSObject -Property @{
+                                TimeStamp = $([DateTime]::Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"));
+                                ServiceBusName=$sb.Name;
+                                TopicName = $topic.Name;
+                                SubscriptionName = $topicSubscription.Name
+                                Status = $topicSubscription.Status;
+                                EntityAvailabilityStatus = $topicSubscription.EntityAvailabilityStatus;
+                                MessageCount = $topicSubscription.MessageCount;
+			                    SubscriptionActiveMessageCount = $topicSubscription.CountDetails.ActiveMessageCount;
+			                    SubscriptionDeadLetterMessageCount = $topicSubscription.CountDetails.DeadLetterMessageCount;
+			                    SubscriptionScheduledMessageCount = $topicSubscription.CountDetails.ScheduledMessageCount;
+			                    SubscriptionTransferMessageCount = $topicSubscription.CountDetails.TransferMessageCount;
+			                    SubscriptionTransferDeadLetterMessageCount = $topicSubscription.CountDetails.TransferDeadLetterMessageCount;                                 		            
+			                   }
+					    $sx
+			            $subscriptionTable = $subscriptionTable += $sx
 			        
-			        # Convert table to a JSON document for ingestion 
-			        $jsonSubscriptionTable = ConvertTo-Json -InputObject $subscriptionTable
+			            # Convert table to a JSON document for ingestion 
+			            $jsonSubscriptionTable = ConvertTo-Json -InputObject $subscriptionTable
+                        }
+                        
+                        try
+                        {
+                            "Initiating ingestion of Topic Subscription data....`n"
+                            Send-OMSAPIIngestionFile -customerId $customerId -sharedKey $sharedKey -body $jsonSubscriptionTable -logType $logType -TimeStampField $Timestampfield
+		    	            #Uncomment below to troubleshoot
+		    	            #$jsonSubscriptionTable
+                        }
+                        catch {Throw "Error trying to ingest Topic Subscription data!"}
                     }
-
-                #Send-OMSAPIIngestionData -customerId $customerId -sharedKey $sharedKey -body jsonSubscriptionTable -logType $logType -TimeStampField $Timestampfield
-		    	#Uncomment below to troubleshoot
-		    	$jsonSubscriptionTable
-                    
                 }
             }
             else{("Skipping " + $sb.Name + " - No topics found `n")}
