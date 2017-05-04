@@ -974,7 +974,8 @@
           "apiVersion": "2015-10-31",
           "location": "[parameters('automationRegion')]",
           "dependsOn": [
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]"
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]",
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/modules/',variables('assets').psModules.azureRmServicebus.name)]"
           ],
           "properties": {
             "runbookType": "[variables('assets').runbooks.scheduleRunbook.type]",
@@ -1037,8 +1038,7 @@
           "dependsOn": [
             "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'))]",
             "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/runbooks/',variables('assets').runbooks.scheduleRunbook.name)]",
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/schedules/',variables('assets').runbooks.scheduleRunbook.ingestScheduleName)]",
-            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/modules/',variables('assets').psModules.azureRmServicebus.name)]"
+            "[concat('Microsoft.Automation/automationAccounts/',parameters('omsAutomationAccountName'),'/schedules/',variables('assets').runbooks.scheduleRunbook.ingestScheduleName)]"
           ]
         },
         {
