@@ -8,6 +8,27 @@ This solution (currently in preview) will allow you to capture your Azure Servic
 
 ![alt text](images/ServiceBusSolution.png "Solution View")
 
+
+
+**Couple of things to note:**
++ Please scroll down and read the "Re-deploy" section for how to re-deploy in case you need to
++ Using this solution assumes you have read the prerequisites - please read those carefully or your deployment will fail
++ Since we are using ARM PowerShell modules in the Azure Automation runbooks - which have dependencies - it can take a while for the activities to be extracted, be patient
++ The scheduleIngestion runbook will kick off approx after 10 mins of the deployment and will run only once to create schedules for the servicebusIngestion runbook
++ The scheduleIngestion runbook and its schedule can be removed after deployment, the schedule will be expired
++ When the 6 schedules for the servicebusIngestion runbook have been created, the runbook will run according the schedule - in worse case scenario after 10 mins after the creation of the schedules
++ The first time that the servicebusIngestion runbook runs, it can take up to 30mins for the data to be ingested, during this time you will see the home tile saying "Waiting on initial service bus ingestion"
+
+
+**Updates in this version (May 2017):**
++ Converted to ARM PowerShell cmdlets - no longer requires a classic Azure Automation RunAs account (still requires SPN RunAs certificate)
++ Added Topic Subscription metrics
++ ARM template creates runbook schedules for every 10mins (instead of once per hour)
++ Able to handle multiple connection strings
++ Updated Dashboards
++ Home tile waits for the initial ingestion (instead of showing no data)
++ Updates metric fieldnames which make more sense (instead of Path_s, etc.)
+
 **Updates in this version (April 2017):**
 + Added more fields for Topics
 + Added a free space remaining percentage for Queue and Topic thresholds
@@ -27,17 +48,17 @@ This solution (currently in preview) will allow you to capture your Azure Servic
 
 **Create a new Automation account**: Go the Azure Portal https://portal.azure.com and create an Azure Automation account (do not link it to your OMS workspace).
 
-If you have an existing OMS Log Analytics workspace in a Resource Group, proceed to create the Automation account in this Resource Group. It is recommended that the Azure region is the same as the OMS Log Analytics resource. By default, the wizard will create an SPN account as part of this process.
+If you have an existing OMS Log Analytics workspace in a Resource Group, proceed to create the Automation account in this Resource Group. It is recommended that the Azure region is the same as the OMS Log Analytics resource. By default, the portal wizard will create an SPN account as part of this process.
 
-Note: Make sure to create the new Automation Account leveraged for this solution in the subscription that you are wanting to monitor the Azure Service Bus instances. If you don't have an existing OMS Log Analytics workspace in a Resource Group the template deployment will create one for you, create a new Automation account into a new Resource Group. A SPN account will be created by default.
+![alt text](images/AAAccountSPN.png "SPN creation")
+
+Note: Before deployment: Make sure to create the new Automation Account leveraged for this solution in the subscription that you are wanting to monitor the Azure Service Bus instances. If you don't have an existing OMS Log Analytics workspace the deployment will create one for you.
 
 **Note: An Azure Automation account needs to exist before deploying this solution, do not link it to your OMS workspace**
 
 Click the button that says **Deploy to Azure**. This will launch the ARM Template you need to configure in the Azure Portal:
 
 ![alt text](images/step3deploy.png "Deployment in the portal")
-
-
 
 
 **Deployment Settings**
@@ -87,3 +108,11 @@ Once you have completed the pre-reqs, you can click on the deploy button below
 
 
 Once deployed you should start to see data from your additional subscriptions flowing into your workspace.
+
+## Re-deploy this solution
+Since the May 2017 is a major update, the recommendation is to remove (from the Azure portal) the OMS solution, the Azure Automation runbooks and schedules.
+
+If you have deployed the May 2017 update and you would like to re-deploy make sure that you remove the schedules from the following runbooks:
++ scheduleIngestion (1 schedule)
++ servicebusIngestion (6 schedules)
+
