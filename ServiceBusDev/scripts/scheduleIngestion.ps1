@@ -21,7 +21,7 @@ $RunbookStartTime = $Date = $([DateTime]::Now.AddMinutes(10))
 
 [int]$RunFrequency = 10
 $NumberofSchedules = 60 / $RunFrequency
-"$NumberofSchedules schedules will be created which will invoke the servicebusIngestion runbook to run every 10mins"
+"*** $NumberofSchedules schedules will be created which will invoke the servicebusIngestion runbook to run every 10mins ***"
 
 $Count = 0
 While ($count -lt $NumberofSchedules)
@@ -38,4 +38,6 @@ While ($count -lt $NumberofSchedules)
     catch
     {throw "Creation of schedules has failed!"}
 }
+
+"Done!"
 
