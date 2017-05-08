@@ -40,7 +40,7 @@ This solution (currently in preview) will allow you to capture your Azure Servic
 ## Prerequisites
 
 + Azure Subscription (if you don't have one you can create one [here](https://azure.microsoft.com/en-us/free/))
-+ New Azure Automation Account (with a RunAs Account AND a Classic RunAs account). To create a new Automation Account refer to step 1 below.+ The schedule (which automatically will be created during deployment) to run the runbook requires a unique GUID, please run the PowerShell command "New-Guid" to generate one
++ New Azure Automation Account (with a RunAs SPN Account). To create a new Automation Account refer to step 1 below.+ The schedule (which automatically will be created during deployment) to run the runbook requires a unique GUID, please run the PowerShell command "New-Guid" to generate one
 
 **Note: The OMS Workspace and Azure Automation Account MUST exist within the same resource group. The Azure Automation Account name needs to be unique.**
 
