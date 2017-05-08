@@ -1,4 +1,5 @@
 # Azure Service Bus Monitoring
+This version is no longer maintained, please use this one: https://github.com/Azure/azure-quickstart-templates/tree/master/oms-servicebus-solution
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fazure%2Fazure-quickstart-templates%2Fmaster%2Foms-servicebus-solution%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
