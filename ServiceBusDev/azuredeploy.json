@@ -65,7 +65,7 @@
     }
   },
   "variables": {
-    "_artifactsLocation": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/oms-servicebus-solution",
+    "_artifactsLocation": "https://raw.githubusercontent.com/tianderturpijn/OMS/master/ServiceBusDev",
     "_artifactsLocationSasToken": "",
     "assets": {
       "psModules": {
