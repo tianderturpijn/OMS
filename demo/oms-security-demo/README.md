@@ -4,7 +4,7 @@ The following lab instructions are intended as a foundation to walk through, dem
 For this lab we will leverage the **OMS Experience Center 2016** workspace.
 
 ***Note:***
-*Please note that security demo's which can cause potential risks of being breached - like opening ports and exposing unpatched systems to the Internet - are excluded from this lab*
+*Please note that security demo's which can cause potential risks of VM's being breached - like opening ports and exposing unpatched systems to the Internet - are excluded from this lab*
 
 ### Objectives
 In this lab we will walk through the following scenario's of the Security & Audit solution pack:
@@ -12,12 +12,11 @@ In this lab we will walk through the following scenario's of the Security & Audi
 * Suspicious Activities
 * ATA (Advanced Threat Analytics)
 * Double extension file execution
-* Malicious IP's hitting your webserver
 * Computer with detected threats
+* Malicious IP's hitting your webserver
 * Members added to security enabled groups
 * User accounts created or enabled
 * View outbound traffic by protocol
-* Update Management
 
 
 This lab has been designed to leverage a mixture of dashboards and - specifically to showcase forensic type of investigation demo's - search queries.
@@ -53,7 +52,7 @@ The data we generate for ATA is being flagged as "suspicious activities" and can
 2. Switch from "Security Detection" to the "List" view to see more details:
 ![](pictures/SuspicousActivities.png)
 
-## Lab 3 - Double extension file execution
+## Lab 4 - Double extension file execution
 One of the known obfuscation techniques being used is to mask an executable to that it looks innocent for the user to execute.
 One of the scripts being used in our labs will download an executable and will use the PDF extension to let the user believe he's opening a PDF file instead of executing an EXE file.
 1. Under "Detections (Preview)" click on "Suspicious double extension file execution":
