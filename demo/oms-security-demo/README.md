@@ -85,20 +85,24 @@ This will show information which reveals the process name and executable being i
 ### Lab 5 - Threat Intelligence
 In this excercise we will look at potential threats hitting your systems.
 1. On the Security And Audit landing page, click on Threat Intelligence:
+ 
 ![](pictures/ThreatIntelligenceTile.png)
-![](pictures/ThreatPDFreport.png)
+
 This brings us to a view with threat types per country and a nice world map.
 Explore the threats by clicking either on the orange pushpins or - in case you have systems responding to those threats - red pushpins.
 
 Under Threat Details you will details about the threat and if a available for that specific threat, a PDF document containing more information:
+
 ![](pictures/ThreatIntelligenceDetails.png)
 
 Opening the PDF report shows something like this:
+
 ![](pictures/ThreatPDFreport.png)
 
 ### Lab 6 - Identity & Access
 In this excercise we will look at the default views for everything related to identities and their access.
 1. From the Security and Audit landing page, click on Identity And Access:
+ 
 ![](pictures/IdentityAccessTile.png)
 
 That takes you to the landing page of Identity & Access:
@@ -114,11 +118,13 @@ The following exercises showcase the strength of using log search across million
 1. Open Log Search
 2. If you are new to Log Search, type in the following query (without the double quotes) to demonstrate the strength of search:
 "* | Measure count() by Type"
+
 ![](pictures/LogSearchAll.png)
 
 This returns all the data types that Log Analytics has available for you.
 
 Now let's limit the search to Security related events by typing in (without quotes and case sensitive) "Type=SecurityEvent"
+
 ![](pictures/LogSearchSecurityEvents.png)
 
 That shows all the security data we have. That's a lot right?
