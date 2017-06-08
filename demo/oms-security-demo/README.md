@@ -29,13 +29,23 @@ These labs are supported by running PowerShell scripts on a designated Azure VM 
 
 1. Open the OMS Experience Center 2016 workspace
 2. Click on the Security And Audit solution tile:
+ 
+
+
+
  ![](pictures/SecurityAndAuditTile.png)
+ 
+ 
 3. This brings you to the Security And Audit landing page:
  ![](pictures/SecurityAndAuditLandingPage.png)
 4. At a glance you will see on the left hand side Security Domains, like Antimalware Assessment, Update Assessment, Network Security, etc. These tiles are all drill down capable and will give more detailed information per domain
 5. The Notable Issues summarizes issues which are highlighted for you to explore:
-6. ![](pictures/NotableIssues.png)
+ 
+
+![](pictures/NotableIssues.png)
 7. The scripts which are running on a VM to generate security data is populating the Notable Issues, but also the Detections view:
+ 
+
 ![](pictures/DectectionsView.png)
 
 ## Lab 2 - Anti-Malware
